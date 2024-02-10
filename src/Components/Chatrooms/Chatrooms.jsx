@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function AddChatroomForm({ setError, fetchChatrooms }) {
+  const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
+  const changeName = (event) => { setName(event.target.value); };
   const changeDescription = (event) => { setDescription(event.target.value); };
 
   const addChatroom = (event) => {
     event.preventDefault();
     //axios.post('http://localhost:8000/users', { name: name })
-    axios.post('http://thejollyfatso.pythonanywhere.com/get_chatrooms', { description: description })
+    axios.post('http://thejollyfatso.pythonanywhere.com/insert_chatroom/' + name + '/' + description, { name: name, description: description })
       .then(() => {
         setError('');
         fetchChatrooms();
@@ -19,10 +21,14 @@ function AddChatroomForm({ setError, fetchChatrooms }) {
 
   return (
     <form>
-      <label htmlFor="chatroom">
-        Chatroom
+      <label htmlFor="name">
+        Room Name
       </label>
-      <input type="text" id="chatroom" value={description} onChange={changeDescription}/>
+      <input type="text" id="name" value={name} onChange={changeName}/>
+      <label htmlFor="description">
+        Description
+      </label>
+      <input type="text" id="description" value={description} onChange={changeDescription}/>
       <button type="submit" onClick={addChatroom}>Submit</button>
     </form>
   );

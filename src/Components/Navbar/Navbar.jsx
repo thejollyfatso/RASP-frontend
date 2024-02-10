@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 const PAGES = [
   { label: 'Home', destination: '/'},
   { label: 'Games', destination: '/games'},
-  { label: 'Users', destination: '/users'},
+  // { label: 'Users', destination: '/users'},
+  { label: 'Chatrooms', destination: '/chatrooms'},
 ]
 
 function Navbar() {

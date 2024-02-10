@@ -40,10 +40,19 @@ function Games() {
   const fetchGames = () => {
       axios.get('http://localhost:8000/games')
         .then((response) => { 
+          console.log("Games response: ", response);
           const gamesObject = response.data.Data;
+          console.log("gamesObject: ", gamesObject);
+          console.log(typeof gamesObject);
           const keys = Object.keys(gamesObject);
           const gamesArray = keys.map((key) => gamesObject[key]);
           setGames(gamesArray);
+          console.log("keys:", keys);
+          console.log("keys[0]", keys[0]);
+          console.log("games:", games);
+          console.log("games[0]", games[0]);
+          console.log(typeof games[0]);
+          console.log("games[0].name", games[0].name);
         })
         .catch(() => { setError('Something went wrong'); });
   };

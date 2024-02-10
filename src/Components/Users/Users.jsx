@@ -3,14 +3,13 @@ import axios from 'axios';
 
 function AddUserForm({ setError, fetchUsers }) {
   const [name, setName] = useState('');
-  const [num, setNum] = useState(0);
 
   const changeName = (event) => { setName(event.target.value); };
-  const changeNum = (event) => { setNum(event.target.value); };
 
   const addUser = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:8000/games', { name: name, numPlayers: num })
+    //axios.post('http://localhost:8000/users', { name: name })
+    axios.post('http://thejollyfatso.pythonanywhere.com/get_users', { name: name })
       .then(() => {
         setError('');
         fetchUsers();
@@ -24,10 +23,6 @@ function AddUserForm({ setError, fetchUsers }) {
         Name
       </label>
       <input type="text" id="name" value={name} onChange={changeName}/>
-      <label htmlFor="num">
-        Number of players
-      </label>
-      <input type="number" id="number" value={num} onChange={changeNum}/>
       <button type="submit" onClick={addUser}>Submit</button>
     </form>
   );
@@ -38,12 +33,20 @@ function Users() {
   const [users, setUsers] = useState([]);
 
   const fetchUsers = () => {
-      axios.get('http://localhost:8000/games')
+      //axios.get('http://localhost:8000/users')
+      axios.get('http://thejollyfatso.pythonanywhere.com/get_users')
         .then((response) => { 
-          const usersObject = response.data.Data;
+          const usersObject = response.data;
           const keys = Object.keys(usersObject);
           const usersArray = keys.map((key) => usersObject[key]);
-          setUsers(usersArray);
+
+          // const myusersObject = response.data.Data;
+          // const mykeys = Object.keys(myusersObject);
+          // const myusersArray = mykeys.map((mykey) => myusersObject[mykey]);
+          // setUsers(keys); //previously set to usersArray
+          setUsers(usersArray); //previously set to usersArray
+          console.log("Users keys:", keys);
+          console.log("Users: ", users);
         })
         .catch(() => { setError('Something went wrong'); });
   };
@@ -67,7 +70,6 @@ function Users() {
     {users.map((user) => (
       <div className="user-container">
         <h2>{user.name}</h2>
-        <p>Players: {user.numPlayers}</p>
       </div>
     ))}
     </div>

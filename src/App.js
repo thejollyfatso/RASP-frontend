@@ -7,7 +7,6 @@ import {
 import './App.css';
 
 import Navbar from './Components/Navbar';
-import Games from './Components/Games';
 import Users from './Components/Users';
 import Chatrooms from './Components/Chatrooms';
 
@@ -17,7 +16,6 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="" element={<h1>Home</h1>} />
-        <Route path="games" element={<Games/>} />
         <Route path="users" element={<Users/>} />
         <Route path="chatrooms" element={<Chatrooms/>} />
       </Routes>

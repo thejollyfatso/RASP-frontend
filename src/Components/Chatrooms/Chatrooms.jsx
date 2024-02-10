@@ -36,25 +36,14 @@ function Chatrooms() {
       //axios.get('http://localhost:8000/users')
       axios.get('http://thejollyfatso.pythonanywhere.com/get_chatrooms')
         .then((response) => { 
-          console.log("Chatroom response: ", response);
           const chatroomsObject = response.data;
-          console.log("chatroomsObject: ", chatroomsObject);
           const keys = Object.keys(chatroomsObject);
           const chatroomsArray = keys.map((key) => ([ key, chatroomsObject[key].description ]));
-          const chatroomsFetch = [];
-          for (let i = 0; i < chatroomsArray.length; i++) {
-            const insObj = {};
-            insObj["name"] = chatroomsArray[i][0];
-            insObj["description"] = chatroomsArray[i][1];
-            chatroomsFetch[i] = insObj;
-          }
-          console.log("chatroomsArray: ", chatroomsArray);
-          console.log("final: ", chatroomsFetch);
-          
-
+          const chatroomsFetch = chatroomsArray.map(([name, description]) => ({
+            name,
+            description
+          }));
           setChatrooms(chatroomsFetch); 
-          console.log("Chatrooms keys:", keys);
-          console.log("Chatrooms: ", chatrooms);
         })
         .catch(() => { setError('Something went wrong'); });
   };

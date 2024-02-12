@@ -9,7 +9,8 @@ function AddUserForm({ setError, fetchUsers }) {
   const addUser = (event) => {
     event.preventDefault();
     //axios.post('http://localhost:8000/users', { name: name })
-    axios.post('http://thejollyfatso.pythonanywhere.com/get_users', { name: name })
+    console.log(name);
+    axios.post('http://thejollyfatso.pythonanywhere.com/register/' + name + "/hardcodePwd")
       .then(() => {
         setError('');
         fetchUsers();

@@ -38,14 +38,18 @@ function Users() {
         .then((response) => { 
           const usersObject = response.data;
           const keys = Object.keys(usersObject);
-          const usersArray = keys.map((key) => usersObject[key]);
+          const usersArray = keys.map((key) => ([key, usersObject[key]]));
+          const usersFetch = usersArray.map(([name, id]) => ({
+            name,
+            id
+          }));
 
           // const myusersObject = response.data.Data;
           // const mykeys = Object.keys(myusersObject);
           // const myusersArray = mykeys.map((mykey) => myusersObject[mykey]);
           // setUsers(keys); //previously set to usersArray
-          setUsers(usersArray); //previously set to usersArray
-          console.log("Users keys:", keys);
+          setUsers(usersFetch); 
+          console.log("usersArray: ", usersArray);
           console.log("Users: ", users);
         })
         .catch(() => { setError('Something went wrong'); });

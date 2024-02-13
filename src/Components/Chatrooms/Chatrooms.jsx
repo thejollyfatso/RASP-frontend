@@ -54,6 +54,15 @@ function Chatrooms() {
         .catch(() => { setError('Something went wrong'); });
   };
 
+  const fetchMessages = (chatroom) => {
+    axios.get('http://thejollyfatso.pythonanywhere.com/get_msgs/' + chatroom)
+      .then((response) => {
+        const msgsObject = response.data;
+        console.log(response.data);
+      })
+      .catch(() => { setError('oopsie woopsie'); });
+  };
+
   useEffect(
     fetchChatrooms,
     [],
@@ -72,7 +81,7 @@ function Chatrooms() {
     <AddChatroomForm setError={setError} fetchChatrooms={fetchChatrooms} />
     {chatrooms.map((chatroom) => (
       <div className="chatroom-container">
-        <h2>{chatroom.name}</h2>
+        <h2>{chatroom.name}<button onClick={() => fetchMessages(chatroom.name)}></button></h2>
         <p>{chatroom.description}</p>
       </div>
     ))}

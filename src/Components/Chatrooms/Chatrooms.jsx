@@ -37,6 +37,7 @@ function AddChatroomForm({ setError, fetchChatrooms }) {
 function Chatrooms() {
   const [error, setError] = useState('');
   const [chatrooms, setChatrooms] = useState([]);
+  const [msgs, setMsgs] = useState([]);
 
   const fetchChatrooms = () => {
       //axios.get('http://localhost:8000/users')
@@ -59,6 +60,19 @@ function Chatrooms() {
       .then((response) => {
         const msgsObject = response.data;
         console.log(response.data);
+        const keys = Object.keys(msgsObject);
+        const msgsArray = keys.map((key) => ([
+          msgsObject[key].Timestamp,
+          msgsObject[key].User,
+          msgsObject[key].Content
+        ]));
+        const msgsFetch = msgsArray.map(([time, user, content]) => ({
+          time,
+          user,
+          content
+        }));
+        console.log(msgsFetch);
+        setMsgs(msgsFetch);
       })
       .catch(() => { setError('oopsie woopsie'); });
   };
@@ -79,6 +93,12 @@ function Chatrooms() {
         </div>
       )}
     <AddChatroomForm setError={setError} fetchChatrooms={fetchChatrooms} />
+    {msgs.map((msg) => (
+      <div>
+        <p>{msg.user} at {msg.time} said:</p>
+        <h4>{msg.content}</h4>
+      </div>
+    ))}
     {chatrooms.map((chatroom) => (
       <div className="chatroom-container">
         <h2>{chatroom.name}<button onClick={() => fetchMessages(chatroom.name)}></button></h2>
